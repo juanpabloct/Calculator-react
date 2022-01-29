@@ -1,20 +1,40 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Numero } from "./Numero";
 
 const OPERATORS = {
-  "/": (a, b) => a * b,
+  "/": (a, b) => a / b,
+  X: (a, b) => a * b,
   "+": (a, b) => a + b,
   "-": (a, b) => a - b,
 };
-console.log(OPERATORS);
+const numbers = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"];
 export default function Calculadora() {
   const [operations, setNumbers] = useState([]);
-  console.log(operations);
+  const [cambiando, setCabiando] = useState(false);
+  console.log(cambiando);
+  useEffect(() => {
+    const onKeydown = (e) => {
+      console.log(e.key);
+      if (numbers.includes(e.key)) {
+        setNumbers([e.key]);
+      }
+    };
+    document.addEventListener("keydown", onKeydown);
+    return () => {
+      document.removeEventListener("keydown", onKeydown);
+    };
+  }, []);
+
+  useEffect(() => {
+    console.log("Cambiando cambio");
+  }, [cambiando]);
+
+  console.log("Render");
   return (
     <div className="calculadora">
       <div className="pantalla">{operations}</div>
       <div className="teclas">
-        {["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"].map((number, i) => (
+        {numbers.map((number, i) => (
           <Numero
             key={i}
             onClick={() => {
@@ -27,26 +47,37 @@ export default function Calculadora() {
         <div
           className="grid"
           onClick={() => {
-            const total = operations.join("");
-            const valor = total.replaceAll(",");
-            const resultado = eval(valor);
-            setNumbers(resultado);
+            setCabiando(!cambiando);
+            let groupA = "";
+            let groupB = "";
+            let operator = "";
+            const getTotal = () =>
+              (operator && OPERATORS[operator](+groupA, +groupB)) || groupA;
+            for (const operation of operations) {
+              if (operation in OPERATORS) {
+                if (operator) {
+                  groupA = String(getTotal());
+                  groupB = "";
+                }
+                operator = operation;
+              } else {
+                if (operator) {
+                  groupB += operation;
+                } else groupA += operation;
+              }
+            }
+            setNumbers([getTotal()]);
           }}
         >
           =
         </div>
-        {[
-          { value: "+", label: "suma" },
-          { value: "-", label: "resta" },
-          { value: "*", label: "X" },
-        ].map(({ label, value }) => (
+        {["+", "-", "X"].map((value) => (
           <div
             className="grid"
             key={value}
             onClick={() => {
               const key = operations.length - 1;
               const last = operations[key];
-              console.log(last);
               if (last in OPERATORS) {
                 operations[key] = value;
                 setNumbers(operations.slice());
@@ -56,7 +87,7 @@ export default function Calculadora() {
               setNumbers([...operations, value]);
             }}
           >
-            {label}
+            {value}
           </div>
         ))}
       </div>
