@@ -13,9 +13,7 @@ function Menu() {
     "Fantasia",
   ];
   const [hover, setShow] = useState(false);
-  const generos = arrayGeneros.map((values) => (
-    <span key={values}>{values}</span>
-  ));
+  const generos = arrayGeneros.map((value) => <span key={value}>{value}</span>);
   console.log(hover);
   return (
     <>
