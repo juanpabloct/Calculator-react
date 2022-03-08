@@ -41,7 +41,7 @@
   width: 100%;
   height: 70px;
   border: 1px solid black;
-  background-color: aquamarine;
+  background-color: rgb(175, 175, 175);
   font-size: 40px;
 }
 .teclas {
