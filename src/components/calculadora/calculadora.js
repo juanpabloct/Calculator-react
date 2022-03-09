@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { Numero } from "./Numero";
+import { Numero } from "../numeros/Numero";
+import "./calculadora.css";
 
 const OPERATORS = {
   "/": (a, b) => a / b,
@@ -9,36 +10,34 @@ const OPERATORS = {
 };
 const numbers = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"];
 export default function Calculadora() {
-  const [operations, setNumbers] = useState([]);
+  const [operations, setOperations] = useState([]);
   const [cambiando, setCabiando] = useState(false);
-  console.log(cambiando);
+  const onKeydown = (e) => {
+    console.log(e.key);
+    if (numbers.includes(e.key)) {
+      setOperations((current) => [...current, e.key]);
+    }
+  };
   useEffect(() => {
-    const onKeydown = (e) => {
-      console.log(e.key);
-      if (numbers.includes(e.key)) {
-        setNumbers([e.key]);
-      }
-    };
     document.addEventListener("keydown", onKeydown);
     return () => {
       document.removeEventListener("keydown", onKeydown);
     };
-  }, []);
+  }, [operations]);
 
-  useEffect(() => {
-    console.log("Cambiando cambio");
-  }, [cambiando]);
+  useEffect(() => {}, [cambiando]);
 
-  console.log("Render");
   return (
     <div className="calculadora">
-      <div className="pantalla">{operations}</div>
+      <div className="pantalla">
+        <div>{operations}</div>
+      </div>
       <div className="teclas">
         {numbers.map((number, i) => (
           <Numero
             key={i}
             onClick={() => {
-              setNumbers([...operations, number]);
+              setOperations([...operations, number]);
             }}
           >
             {number}
@@ -66,7 +65,7 @@ export default function Calculadora() {
                 } else groupA += operation;
               }
             }
-            setNumbers([getTotal()]);
+            setOperations([getTotal()]);
           }}
         >
           =
@@ -80,11 +79,11 @@ export default function Calculadora() {
               const last = operations[key];
               if (last in OPERATORS) {
                 operations[key] = value;
-                setNumbers(operations.slice());
+                setOperations(operations.slice());
 
                 return;
               }
-              setNumbers([...operations, value]);
+              setOperations([...operations, value]);
             }}
           >
             {value}
