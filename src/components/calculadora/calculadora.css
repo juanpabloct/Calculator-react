@@ -29,8 +29,8 @@
   font-size: 30px;
   text-align: center;
   flex: 1 1 33.3%;
-  height: 10vh;
   display: flex;
+  height: 10vh;
   justify-content: center;
   align-items: center;
 }
