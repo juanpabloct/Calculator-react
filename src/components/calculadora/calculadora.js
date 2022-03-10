@@ -5,7 +5,7 @@ import "./calculadora.css";
 
 const OPERATORS = {
   "÷": (a, b) => a / b,
-  X: (a, b) => a * b,
+  x: (a, b) => a * b,
   "+": (a, b) => a + b,
   "-": (a, b) => a - b,
 };
