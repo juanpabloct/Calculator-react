@@ -20,7 +20,6 @@
 .teclas {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
   padding: 12px;
 }
 .grid {
@@ -31,6 +30,9 @@
   text-align: center;
   flex: 1 1 33.3%;
   height: 10vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .grid:hover {
   background-color: rgb(48, 42, 42);
