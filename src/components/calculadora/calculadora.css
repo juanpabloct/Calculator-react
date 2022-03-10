@@ -30,6 +30,7 @@
   font-size: 30px;
   text-align: center;
   flex: 1 1 33.3%;
+  height: 10vh;
 }
 .grid:hover {
   background-color: rgb(48, 42, 42);
@@ -42,7 +43,7 @@
     font-size: 60px;
   }
   .pantalla {
-    font-size: 40px;
+    font-size: 50px;
   }
 }
 @media (max-width: 300px) {
