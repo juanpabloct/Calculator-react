@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { Numero } from "../numeros/Numero";
+import buttonDelete from "../../assets/img/buttonDelete.svg";
 import "./calculadora.css";
 
 const OPERATORS = {
@@ -8,24 +9,30 @@ const OPERATORS = {
   "+": (a, b) => a + b,
   "-": (a, b) => a - b,
 };
+
 const numbers = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"];
+
 export default function Calculadora() {
   const [operations, setOperations] = useState([]);
   const [cambiando, setCabiando] = useState(false);
-  const onKeydown = (e) => {
-    console.log(e.key);
+  const eliminar = (current) => current.slice(0, current.length - 1);
+  const onKeydown = useCallback((e) => {
     if (numbers.includes(e.key)) {
       setOperations((current) => [...current, e.key]);
+    } else {
+      if (e.key === "Backspace") {
+        setOperations((current) => eliminar(current));
+      }
     }
-  };
+  }, []);
+
   useEffect(() => {
+    console.log(234234);
     document.addEventListener("keydown", onKeydown);
     return () => {
       document.removeEventListener("keydown", onKeydown);
     };
-  }, [operations]);
-
-  useEffect(() => {}, [cambiando]);
+  }, [onKeydown]);
 
   return (
     <div className="calculadora">
@@ -88,7 +95,15 @@ export default function Calculadora() {
           >
             {value}
           </div>
-        ))}
+        ))}{" "}
+        <img
+          src={buttonDelete}
+          alt="eliminar"
+          id="eliminar"
+          onClick={() => {
+            setOperations((current) => eliminar(current));
+          }}
+        />
       </div>
     </div>
   );
