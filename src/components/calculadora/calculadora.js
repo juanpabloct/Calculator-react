@@ -4,7 +4,7 @@ import buttonDelete from "../../assets/img/buttonDelete.svg";
 import "./calculadora.css";
 
 const OPERATORS = {
-  "/": (a, b) => a / b,
+  "÷": (a, b) => a / b,
   X: (a, b) => a * b,
   "+": (a, b) => a + b,
   "-": (a, b) => a - b,
@@ -50,36 +50,10 @@ export default function Calculadora() {
             {number}
           </Numero>
         ))}
-        <div
-          className="grid"
-          onClick={() => {
-            setCabiando(!cambiando);
-            let groupA = "";
-            let groupB = "";
-            let operator = "";
-            const getTotal = () =>
-              (operator && OPERATORS[operator](+groupA, +groupB)) || groupA;
-            for (const operation of operations) {
-              if (operation in OPERATORS) {
-                if (operator) {
-                  groupA = String(getTotal());
-                  groupB = "";
-                }
-                operator = operation;
-              } else {
-                if (operator) {
-                  groupB += operation;
-                } else groupA += operation;
-              }
-            }
-            setOperations([getTotal()]);
-          }}
-        >
-          =
-        </div>
-        {["+", "-", "X"].map((value) => (
+        {["+", "-", "x", "÷"].map((value) => (
           <div
             className="grid"
+            id="operadores"
             key={value}
             onClick={() => {
               const key = operations.length - 1;
@@ -104,6 +78,34 @@ export default function Calculadora() {
             setOperations((current) => eliminar(current));
           }}
         />
+        <div
+          className="grid"
+          onClick={() => {
+            setCabiando(!cambiando);
+            let groupA = "";
+            let groupB = "";
+            let operator = "";
+            const getTotal = () =>
+              (operator && OPERATORS[operator](+groupA, +groupB)) || groupA;
+            for (const operation of operations) {
+              if (operation in OPERATORS) {
+                if (operator) {
+                  groupA = String(getTotal());
+                  groupB = "";
+                }
+                operator = operation;
+              } else {
+                if (operator) {
+                  groupB += operation;
+                } else groupA += operation;
+              }
+            }
+            setOperations([getTotal()]);
+          }}
+          id="igual"
+        >
+          =
+        </div>
       </div>
     </div>
   );
