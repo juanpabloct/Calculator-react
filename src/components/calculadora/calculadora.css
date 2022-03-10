@@ -37,8 +37,14 @@
 .grid:hover {
   background-color: rgb(48, 42, 42);
 }
+#operadores:hover {
+  background-color: rgb(167, 42, 48);
+}
 #eliminar {
   width: 30%;
+}
+#igual:hover {
+  background-color: rgb(34, 88, 55);
 }
 @media (min-width: 1000px) {
   .grid {
