@@ -35,14 +35,14 @@
   background-color: rgb(48, 42, 42);
 }
 #eliminar {
-  width: 40%;
+  width: 30%;
 }
 @media (min-width: 1000px) {
   .grid {
-    font-size: 80px;
+    font-size: 60px;
   }
   .pantalla {
-    font-size: 60px;
+    font-size: 40px;
   }
 }
 @media (max-width: 300px) {
